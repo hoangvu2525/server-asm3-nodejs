@@ -84,7 +84,8 @@ exports.signIn = async (req, res) => {
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
+      sameSite: "None",
     });
 
     // Trả về thông tin user (không bao gồm mật khẩu)

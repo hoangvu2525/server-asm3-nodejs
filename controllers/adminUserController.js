@@ -36,7 +36,8 @@ exports.loginAdmin = async (req, res) => {
     // Gửi token qua cookie
     res.cookie("access_token", token, {
       httpOnly: true,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "None",
     });
 
     res.status(200).json({
