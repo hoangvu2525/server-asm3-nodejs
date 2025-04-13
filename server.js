@@ -26,7 +26,9 @@ const MONGO_URL = process.env.MONGO_URL;
 // Middleware
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL],
+    origin: [
+      ["https://asm3-client-fdd10.web.app", "https://asm3-admin-b70a8.web.app"],
+    ],
     credentials: true, // cho phép gửi cookie từ frontend
   })
 );
