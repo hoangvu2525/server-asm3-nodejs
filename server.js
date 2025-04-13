@@ -37,7 +37,7 @@ const MONGO_URL = process.env.MONGO_URL;
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [process.env.CLIENT_URL],
     credentials: true, // cho phép gửi cookie từ frontend
   })
 );
