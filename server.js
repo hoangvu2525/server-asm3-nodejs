@@ -8,7 +8,6 @@ const Product = require("./models/Product");
 const userRoutes = require("./routes/user");
 const http = require("http");
 const Image = require("./models/Img");
-const { Server } = require("socket.io");
 const cookieParser = require("cookie-parser");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
@@ -19,16 +18,6 @@ const adminProductRoute = require("./routes/adminProducts");
 const historyRoute = require("./routes/adminHistory");
 
 const app = express(); // Khởi tạo ứng dụng Express
-const server = http.createServer(app); // Tạo server HTTP từ Express app
-
-const io = new Server(server, {
-  // Tạo server Socket.IO kèm cấu hình CORS
-
-  cors: {
-    origin: "*", //Cho phép mọi nguồn truy cập
-    methods: ["GET", "POST"],
-  },
-});
 
 const PORT = process.env.PORT; // Khai báo cổng server
 
@@ -71,20 +60,6 @@ app.use("/admin", adminUserRoutes);
 app.use("/admin-products", adminProductRoute);
 app.use("/admin-histories", historyRoute);
 
-io.on("connection", (socket) => {
-  console.log(" New client connected:", socket.id);
-
-  // Nhận và gửi message
-  socket.on("sendMessage", (data) => {
-    console.log(" Message received:", data);
-    io.emit("receiveMessage", data); // Gửi lại message cho tất cả clients
-  });
-
-  socket.on("disconnect", () => {
-    console.log(" Client disconnected:", socket.id);
-  });
-});
-
 // Connect MongoDB và chạy server
 mongoose
   .connect(MONGO_URL)
@@ -94,7 +69,7 @@ mongoose
     // importData(); //  Import dữ liệu lên mongodb
     // importImages(); // Import ảnh mongodb
 
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(` Server running`);
     });
   })
