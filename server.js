@@ -39,7 +39,7 @@ app.use(cookieParser()); // Middleware để đọc cookie từ request
 // Routes
 app.use("/users", userRoutes);
 
-app.use("/img", express.static(path.join(__dirname, "data/img")));
+app.use("/img", express.static(path.join(__dirname, "Data/img")));
 
 app.use("/carts", cartRoutes);
 app.use("/order", orderRoute);
